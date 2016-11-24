@@ -19,6 +19,7 @@
     "webpack-dev-middleware": "^1.8.4"
   },
   "dependencies": {
+    "fabric": "^1.7.0",
     "mobx": "^2.6.3"
   }
 }
