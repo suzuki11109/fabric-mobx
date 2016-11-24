@@ -1,4 +1,4 @@
-import { toJS, observable, autorun, transaction, createTransformer, reaction, observe } from 'mobx';
+import { observable, autorun, transaction, reaction } from 'mobx';
 import { fabric } from 'fabric';
 
 let states = observable([]);
