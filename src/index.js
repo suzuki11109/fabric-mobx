@@ -16,17 +16,17 @@ const reaction1 = reaction(
   () => store.currentFrame,
   (frame) => {
     if (frame >= 0) {
-      renderFrame(store.currentFrame);
+      renderFrame(states[store.currentFrame]);
     }
   }
 );
 
-function renderFrame(frame) {
+function renderFrame(object) {
   canvas.off('object:added', handleCanvasModified);
   canvas.off('object:modified', handleCanvasModified);
-  canvas.loadFromJSON(states[frame]);
+  canvas.loadFromJSON(object);
   canvas.renderAll();
-  console.log('render from frame changed');
+  console.log('render from object');
   canvas.on('object:added', handleCanvasModified);
   canvas.on('object:modified', handleCanvasModified);
 }
@@ -34,9 +34,6 @@ function renderFrame(frame) {
 let canvas = new fabric.Canvas('canvas', {
   width: 800, height: 600
 });
-
-canvas.on('object:added', handleCanvasModified);
-canvas.on('object:modified', handleCanvasModified);
 
 function handleCanvasModified() {
   transaction(() => {
@@ -48,23 +45,11 @@ let rect1 = new fabric.Rect({
   top: 100, left: 100, width: 50, height: 50, fill: 'red'
 });
 
-let rect2 = new fabric.Rect({
-  top: 200, left: 100, width: 50, height: 50, fill: 'red'
-});
+let initialObject = {
+  'objects': [rect1.toJSON()]
+};
 
-let rect3 = new fabric.Rect({
-  top: 300, left: 100, width: 50, height: 50, fill: 'red'
-});
-
-let rect4 = new fabric.Rect({
-  top: 400, left: 100, width: 50, height: 50, fill: 'red'
-});
-
-let rect5 = new fabric.Rect({
-  top: 500, left: 100, width: 50, height: 50, fill: 'red'
-});
-
-canvas.add(rect1, rect2, rect3, rect4, rect5);
+states.push(initialObject);
 
 var undoBtn = document.getElementById('undo');
 var redoBtn = document.getElementById('redo');
