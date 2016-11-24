@@ -26,7 +26,6 @@ function renderFrame(object) {
   canvas.off('object:modified', handleCanvasModified);
   canvas.loadFromJSON(object);
   canvas.renderAll();
-  console.log('render from object');
   canvas.on('object:added', handleCanvasModified);
   canvas.on('object:modified', handleCanvasModified);
 }
@@ -37,6 +36,9 @@ let canvas = new fabric.Canvas('canvas', {
 
 function handleCanvasModified() {
   transaction(() => {
+    if (store.currentFrame < states.length - 1) {
+      states.splice(store.currentFrame + 1);
+    }
     states.push(canvas.toJSON())
   });
 }
