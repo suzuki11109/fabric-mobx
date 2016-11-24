@@ -53,6 +53,7 @@ states.push(initialObject);
 
 var undoBtn = document.getElementById('undo');
 var redoBtn = document.getElementById('redo');
+var exportBtn = document.getElementById('export');
 
 undoBtn.addEventListener('click', () => {
   if (store.currentFrame > 0 && store.currentFrame <= states.length) {
@@ -64,5 +65,15 @@ redoBtn.addEventListener('click', () => {
   if (store.currentFrame >= 0 && store.currentFrame < states.length - 1) {
     store.currentFrame++;
   }
+});
+
+exportBtn.addEventListener('click', () => {
+  let canvasElement = document.getElementById('canvas');
+  try {
+    var img = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
+  } catch(e) {
+    var img = canvas.toDataURL().split(',')[1];
+  }
+  alert(img);
 });
 
